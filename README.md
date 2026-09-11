@@ -1,5 +1,8 @@
 # Physics-Informed Neural Network for 2D Solid Mechanics
 
+**Project idea:** author-defined SciML / solid-mechanics portfolio concept  
+**Implementation:** coded with an AI coding assistant under the author's direction
+
 A production-quality **Scientific Machine Learning** portfolio project that solves **2D linear elasticity** with a Physics-Informed Neural Network (PINN), validates the solver with a manufactured solution, compares against an analytical Timoshenko cantilever reference, and supports **inverse estimation of Young's modulus** from sparse displacement data.
 
 | Capability | Status |
@@ -38,7 +41,8 @@ A production-quality **Scientific Machine Learning** portfolio project that solv
 17. [Testing and quality](#testing-and-quality)
 18. [Limitations](#limitations)
 19. [Next improvements](#next-improvements)
-20. [License](#license)
+20. [Authorship and collaboration](#authorship-and-collaboration)
+21. [License](#license)
 
 ---
 
@@ -56,12 +60,14 @@ and minimizes a loss that penalizes:
 - Dirichlet / Neumann boundary residuals,
 - optional sparse measurement mismatch (data / inverse mode).
 
-**Why this project is useful as a portfolio piece**
+**Why this project matters**
 
 - Couples solid mechanics with modern ML engineering
 - Uses automatic differentiation for strain, stress, and equilibrium
 - Separates physics modules from training loops
 - Includes reproducible YAML configs, checkpoints, tests, and honest metrics
+
+The scientific goal, problem setup, and portfolio scope were defined by the author. An AI assistant was used to accelerate implementation (code structure, modules, tests, and documentation) while following that design.
 
 ```mermaid
 flowchart TB
@@ -783,9 +789,14 @@ Latest local verification status for this codebase:
 
 ---
 
-## Citation / portfolio note
+## Authorship and collaboration
 
-If you use this repository in a portfolio or report, emphasize:
+| Role | Contribution |
+|---|---|
+| **Author** | Project idea, physical problem choice, SciML goals, requirements, and review direction |
+| **AI coding assistant** | Implementation support: repository layout, PyTorch PINN code, configs, tests, and README drafting |
+
+This repository is presented as an author-led portfolio project with AI-assisted coding, not as an unsupervised AI-generated dump. Emphasize in write-ups:
 
 1. **Physics correctness** (manufactured solution + AD residuals)
 2. **Engineering structure** (modular physics, YAML configs, tests)
