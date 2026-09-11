@@ -1,0 +1,74 @@
+problem:
+  type: cantilever
+  plane_condition: plane_stress
+
+geometry:
+  length: 1.0
+  height: 1.0
+
+material:
+  youngs_modulus: 1.0
+  poisson_ratio: 0.3
+
+network:
+  hidden_layers: [48, 48, 48]
+  activation: tanh
+
+sampling:
+  n_interior: 2500
+  n_boundary: 600
+  method: lhs
+  seed: 0
+
+adaptive_sampling:
+  enabled: false
+
+scaling:
+  enabled: true
+  displacement_ref: 0.01
+
+boundary:
+  left: fixed
+  right_traction_x: 0.0
+  right_traction_y: 0.0
+  right_traction_profile: uniform
+  top: traction_free
+  bottom: traction_free
+  enforcement: soft
+
+body_force:
+  fx: 0.0
+  fy: 0.0
+
+loss:
+  lambda_pde: 1.0
+  lambda_bc: 10.0
+  lambda_data: 0.0
+  lambda_dirichlet: 10.0
+  lambda_neumann: 1.0
+
+training:
+  adam_epochs: 3000
+  adam_lr: 0.001
+  lbfgs_enabled: true
+  lbfgs_max_iter: 200
+  scheduler: cosine
+  grad_clip: 1.0
+  log_every: 300
+  checkpoint_every: 1000
+  device: cpu
+  seed: 0
+
+reference:
+  type: none
+  n_eval_x: 31
+  n_eval_y: 21
+
+inverse:
+  enabled: false
+
+logging:
+  backend: none
+  experiment_name: pinn-manufactured
+  run_name: manufactured
+  output_dir: outputs

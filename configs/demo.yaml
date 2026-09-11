@@ -1,0 +1,74 @@
+# Demo config: E=1 nondim cantilever with Timoshenko-matched parabolic tip shear
+problem:
+  type: cantilever
+  plane_condition: plane_stress
+
+geometry:
+  length: 1.0
+  height: 0.2
+
+material:
+  youngs_modulus: 1.0
+  poisson_ratio: 0.3
+
+network:
+  hidden_layers: [64, 64, 64, 64]
+  activation: tanh
+
+sampling:
+  n_interior: 5000
+  n_boundary: 1000
+  method: lhs
+  seed: 42
+
+adaptive_sampling:
+  enabled: false
+
+scaling:
+  enabled: true
+
+boundary:
+  left: fixed
+  right_traction_x: 0.0
+  right_traction_y: -0.1
+  right_traction_profile: parabolic
+  top: traction_free
+  bottom: traction_free
+  enforcement: hard
+
+body_force:
+  fx: 0.0
+  fy: 0.0
+
+loss:
+  lambda_pde: 1.0
+  lambda_bc: 1.0
+  lambda_data: 0.0
+  lambda_dirichlet: 1.0
+  lambda_neumann: 10.0
+
+training:
+  adam_epochs: 4000
+  adam_lr: 0.001
+  lbfgs_enabled: true
+  lbfgs_max_iter: 300
+  scheduler: cosine
+  grad_clip: 1.0
+  log_every: 400
+  checkpoint_every: 1000
+  device: cpu
+  seed: 42
+
+reference:
+  type: analytical_beam
+  n_eval_x: 41
+  n_eval_y: 17
+
+inverse:
+  enabled: false
+
+logging:
+  backend: none
+  experiment_name: pinn-elasticity-demo
+  run_name: demo_forward
+  output_dir: outputs

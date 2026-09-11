@@ -1,0 +1,80 @@
+problem:
+  type: cantilever
+  plane_condition: plane_stress
+
+geometry:
+  length: 1.0
+  height: 0.2
+
+material:
+  youngs_modulus: 1.0
+  poisson_ratio: 0.3
+
+network:
+  hidden_layers: [48, 48, 48]
+  activation: tanh
+
+sampling:
+  n_interior: 3000
+  n_boundary: 600
+  method: lhs
+  seed: 7
+
+adaptive_sampling:
+  enabled: false
+
+scaling:
+  enabled: true
+
+boundary:
+  left: fixed
+  right_traction_x: 0.0
+  right_traction_y: -0.1
+  right_traction_profile: parabolic
+  top: traction_free
+  bottom: traction_free
+  enforcement: hard
+
+body_force:
+  fx: 0.0
+  fy: 0.0
+
+loss:
+  lambda_pde: 1.0
+  lambda_bc: 1.0
+  lambda_data: 50.0
+  lambda_dirichlet: 1.0
+  lambda_neumann: 10.0
+
+training:
+  adam_epochs: 2500
+  adam_lr: 0.001
+  lbfgs_enabled: true
+  lbfgs_max_iter: 150
+  scheduler: cosine
+  grad_clip: 1.0
+  log_every: 500
+  checkpoint_every: 1000
+  device: cpu
+  seed: 7
+
+reference:
+  type: analytical_beam
+  n_eval_x: 21
+  n_eval_y: 11
+
+inverse:
+  enabled: true
+  learn_E: true
+  learn_nu: false
+  E_init: 0.5
+  nu_init: 0.3
+  data_path: null
+  noise_std: 0.01
+  n_measurements: 40
+
+logging:
+  backend: none
+  experiment_name: pinn-elasticity-inverse-demo
+  run_name: demo_inverse
+  output_dir: outputs

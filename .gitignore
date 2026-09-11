@@ -1,0 +1,47 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+dist/
+build/
+*.egg
+.venv/
+venv/
+env/
+
+# Testing / typing
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+.DS_Store
+
+# Outputs & tracking
+outputs/
+!outputs/.gitkeep
+mlruns/
+runs/
+*.pt
+*.pth
+*.ckpt
+.venv/
+
+# Data (keep structure, ignore large artifacts)
+data/reference/*.npy
+data/reference/*.npz
+!data/reference/.gitkeep
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# OS
+Thumbs.db

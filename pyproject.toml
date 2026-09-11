@@ -1,0 +1,68 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pinn-elasticity"
+version = "0.1.0"
+description = "Physics-Informed Neural Network for 2D linear elasticity (solid mechanics)"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Scientific ML Portfolio" }]
+keywords = ["PINN", "solid-mechanics", "elasticity", "scientific-ml", "pytorch"]
+dependencies = [
+    "torch>=2.0",
+    "numpy>=1.24",
+    "scipy>=1.10",
+    "matplotlib>=3.7",
+    "pyyaml>=6.0",
+    "pydantic>=2.0",
+    "pydantic-settings>=2.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4",
+    "ruff>=0.4",
+    "mypy>=1.8",
+    "types-PyYAML>=6.0",
+]
+mlflow = ["mlflow>=2.10"]
+
+[project.scripts]
+pinn-train-forward = "scripts.train_forward:main"
+pinn-train-inverse = "scripts.train_inverse:main"
+pinn-evaluate = "scripts.evaluate:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+extend-exclude = [".venv"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+ignore = ["E501"]
+
+[tool.ruff.lint.per-file-ignores]
+"scripts/*.py" = ["E402"]
+
+[tool.mypy]
+python_version = "3.10"
+strict = false
+ignore_missing_imports = true
+warn_return_any = false
+warn_unused_configs = true
+packages = ["pinn_elasticity"]
+mypy_path = "src"
+
+[[tool.mypy.overrides]]
+module = ["torch.*", "matplotlib.*", "scipy.*", "mlflow.*"]
+ignore_missing_imports = true

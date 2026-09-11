@@ -1,0 +1,78 @@
+problem:
+  type: cantilever
+  plane_condition: plane_stress
+
+geometry:
+  length: 1.0
+  height: 0.2
+
+material:
+  # Consistent units: length in mm-scale, E in MPa-equivalent → displacements O(1e-3..1e-2)
+  youngs_modulus: 210000.0
+  poisson_ratio: 0.3
+
+network:
+  hidden_layers: [64, 64, 64, 64]
+  activation: tanh
+
+sampling:
+  n_interior: 10000
+  n_boundary: 2000
+  method: lhs
+  seed: 42
+
+adaptive_sampling:
+  enabled: false
+  interval: 2000
+  n_new: 1000
+  top_fraction: 0.2
+
+scaling:
+  enabled: true
+
+boundary:
+  left: fixed
+  right_traction_x: 0.0
+  right_traction_y: -1.0
+  right_traction_profile: parabolic
+  top: traction_free
+  bottom: traction_free
+  enforcement: hard
+
+body_force:
+  fx: 0.0
+  fy: 0.0
+
+loss:
+  lambda_pde: 1.0
+  lambda_bc: 10.0
+  lambda_data: 0.0
+  lambda_dirichlet: 1.0
+  lambda_neumann: 10.0
+
+training:
+  adam_epochs: 10000
+  adam_lr: 0.001
+  lbfgs_enabled: true
+  lbfgs_max_iter: 500
+  scheduler: cosine
+  grad_clip: 1.0
+  log_every: 100
+  eval_every: 500
+  checkpoint_every: 1000
+  device: auto
+  seed: 42
+
+reference:
+  type: analytical_beam
+  n_eval_x: 51
+  n_eval_y: 21
+
+inverse:
+  enabled: false
+
+logging:
+  backend: none
+  experiment_name: pinn-elasticity
+  run_name: cantilever_forward
+  output_dir: outputs

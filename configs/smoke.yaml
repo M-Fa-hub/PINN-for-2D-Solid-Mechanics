@@ -1,0 +1,74 @@
+# Lightweight config for CI / smoke testing (fast, not accurate)
+problem:
+  type: cantilever
+  plane_condition: plane_stress
+
+geometry:
+  length: 1.0
+  height: 0.2
+
+material:
+  youngs_modulus: 210000.0
+  poisson_ratio: 0.3
+
+network:
+  hidden_layers: [32, 32, 32]
+  activation: tanh
+
+sampling:
+  n_interior: 500
+  n_boundary: 120
+  method: lhs
+  seed: 0
+
+adaptive_sampling:
+  enabled: false
+
+scaling:
+  enabled: true
+
+boundary:
+  left: fixed
+  right_traction_x: 0.0
+  right_traction_y: -1.0
+  right_traction_profile: parabolic
+  top: traction_free
+  bottom: traction_free
+  enforcement: soft
+
+body_force:
+  fx: 0.0
+  fy: 0.0
+
+loss:
+  lambda_pde: 1.0
+  lambda_bc: 100.0
+  lambda_data: 0.0
+  lambda_dirichlet: 10.0
+  lambda_neumann: 1.0
+
+training:
+  adam_epochs: 50
+  adam_lr: 0.001
+  lbfgs_enabled: true
+  lbfgs_max_iter: 20
+  scheduler: none
+  grad_clip: 1.0
+  log_every: 10
+  checkpoint_every: 50
+  device: cpu
+  seed: 0
+
+reference:
+  type: analytical_beam
+  n_eval_x: 21
+  n_eval_y: 11
+
+inverse:
+  enabled: false
+
+logging:
+  backend: none
+  experiment_name: pinn-elasticity-smoke
+  run_name: smoke
+  output_dir: outputs
